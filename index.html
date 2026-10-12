@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ivan Kurniawan — Portfolio Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>tailwind.config={theme:{extend:{colors:{ac:'rgb(var(--a) / <alpha-value>)'},fontFamily:{dis:['Anton','Impact','sans-serif'],sans:['Inter','system-ui','sans-serif']}}}}</script>
+<style>
+:root{--a:220 38 38;--on:255 255 255;--bg:12 8 9;--tx:245 235 220;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+html{background:rgb(var(--bg));color-scheme:dark}
+body{background-color:rgb(var(--bg));color:rgb(var(--tx));transition:background-color .4s;isolation:isolate}
+.bgglow{background-image:radial-gradient(circle at 70% 10%,rgb(var(--a)/.18),transparent 45%),radial-gradient(circle at 10% 80%,rgb(var(--a)/.1),transparent 40%)}
+#sky{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none;image-rendering:pixelated}
+#rig,#rig *{transform-style:preserve-3d}
+#stage{perspective:1100px;touch-action:pan-y;cursor:grab}
+#stage:active{cursor:grabbing}
+.face{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.card{background:rgb(255 255 255/.04);border:1px solid rgb(var(--a)/.25);border-radius:14px;transition:.3s}
+@media(hover:hover){.card:hover{border-color:rgb(var(--a)/.7);transform:translateY(-4px)}}
+.card:active{border-color:rgb(var(--a)/.8)}
+#gal .card{cursor:zoom-in}
+nav a.on{background:rgb(var(--a));color:rgb(var(--on))}
+html,body{overflow-x:hidden}body{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+.sec{padding:70px 16px;max-width:1100px;margin:auto}@media(min-width:768px){.sec{padding:90px 24px}}
+.h2{font-family:Anton,Impact,sans-serif;font-size:clamp(2rem,6vw,2.6rem);letter-spacing:.02em}
+#cv{touch-action:pan-y;cursor:grab;display:block}#cv:active{cursor:grabbing}
+#projects::-webkit-scrollbar{display:none}
+summary::-webkit-details-marker{display:none}
+</style>
+</head>
+<body class="font-sans bgglow">
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<!-- NAVBAR -->
+<nav class="fixed left-1/2 -translate-x-1/2 z-50 max-w-[96vw] overflow-x-auto" style="top:calc(env(safe-area-inset-top,0px) + 14px)">
+  <ul class="flex gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-1.5 rounded-full backdrop-blur-md bg-black/60 border border-ac/30 text-xs sm:text-sm">
+    <li><a href="#home" class="nv px-3 sm:px-4 py-2 rounded-full block whitespace-nowrap hover:bg-ac/30">Home</a></li>
+    <li><a href="#about" class="nv px-3 sm:px-4 py-2 rounded-full block whitespace-nowrap hover:bg-ac/30">About</a></li>
+    <li><a href="#skill" class="nv px-3 sm:px-4 py-2 rounded-full block whitespace-nowrap hover:bg-ac/30">Skill</a></li>
+    <li><a href="#project" class="nv px-3 sm:px-4 py-2 rounded-full block whitespace-nowrap hover:bg-ac/30">Project</a></li>
+    <li><a href="#galeri" class="nv px-3 sm:px-4 py-2 rounded-full block whitespace-nowrap hover:bg-ac/30">Galeri</a></li>
+  </ul>
+</nav>
+
+<!-- THEME SWITCHER -->
+<div class="fixed z-50 flex gap-3 p-2 rounded-full left-1/2 -translate-x-1/2 bottom-[calc(env(safe-area-inset-bottom,0px)+12px)] md:left-auto md:translate-x-0 md:right-3 md:top-1/2 md:-translate-y-1/2 md:bottom-auto md:flex-col md:gap-2 bg-black/50 backdrop-blur border border-white/10">
+  <button data-t="red" title="Merah" class="w-9 h-9 md:w-6 md:h-6 rounded-full bg-red-600 ring-2 ring-white"></button>
+  <button data-t="blue" title="Biru" class="w-9 h-9 md:w-6 md:h-6 rounded-full bg-blue-600"></button>
+  <button data-t="green" title="Hijau" class="w-9 h-9 md:w-6 md:h-6 rounded-full bg-green-600"></button>
+  <button data-t="mono" title="Hitam Putih" class="w-9 h-9 md:w-6 md:h-6 rounded-full" style="background:linear-gradient(90deg,#000 50%,#fff 50%);border:1px solid #888"></button>
+</div>
+
+<!-- HOME -->
+<section id="home" class="relative min-h-[100svh] overflow-hidden pt-24">
+  <div class="absolute inset-x-0 top-20 text-center font-dis leading-none select-none" style="font-size:clamp(4rem,19vw,17rem);color:rgb(var(--tx))">PORTFOLIO</div>
+  <div class="relative max-w-[1100px] mx-auto px-5 grid lg:grid-cols-3 items-center gap-8 pt-[20vw] lg:pt-[14vw]">
+    <div class="order-3 lg:order-1 text-center lg:text-left">
+      <h2 class="font-dis text-4xl tracking-wide">WEB / DESKTOP</h2>
+      <p class="text-xs tracking-[.25em] mt-3 opacity-70 leading-6">HTML · CSS<br>PHP · LARAVEL</p>
+      <p class="mt-6 text-sm border-ac lg:border-l-2 lg:pl-3 opacity-90">Saya membuat aplikasi yang rapi, cepat, dan nyaman dipakai.</p>
+    </div>
+    <div class="order-1 lg:order-2 flex flex-col items-center">
+      <div id="stage" class="relative w-[min(320px,86vw)] h-[420px]">
+        <div class="absolute rounded-full bg-ac" style="width:80%;aspect-ratio:1;left:10%;top:14%"></div>
+        <canvas id="cv" class="absolute inset-0 w-full h-full"></canvas>
+      </div>
+      <p class="text-[11px] opacity-60 mt-2">Geser untuk memutar · kepala mengikuti kursor</p>
+      <details open class="w-full max-w-[340px] mt-3 rounded-2xl border border-ac/30 bg-black/40 backdrop-blur p-3 text-xs">
+        <summary class="cursor-pointer font-semibold tracking-widest text-ac list-none flex justify-between">KUSTOMISASI KARAKTER <span>▾</span></summary>
+        <div id="ctl" class="mt-3 space-y-2.5 text-left"></div>
+      </details>
+    </div>
+    <div class="order-2 lg:order-3 text-center lg:text-right">
+      <h1 class="font-dis text-4xl sm:text-5xl leading-[1.05]">IVAN<br><span class="text-ac">KURNIAWAN</span></h1>
+      <p class="text-ac text-xs tracking-widest mt-2">WEB DEVELOPER</p>
+      <p class="text-sm opacity-80 mt-4">Developer yang membangun website dan aplikasi desktop dengan kode yang bersih.</p>
+      <div class="flex justify-center lg:justify-end gap-8 mt-6 text-sm">
+        <div><b class="text-2xl font-dis text-ac">2+</b><br>Tahun</div>
+        <div><b class="text-2xl font-dis text-ac">8</b><br>Project</div>
+        <div><b class="text-2xl font-dis text-ac">4</b><br>Skill</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="relative rounded-3xl overflow-hidden border border-ac/30 p-5 md:p-8" style="background:linear-gradient(135deg,rgb(var(--a)/.14),rgb(0 0 0/.4))">
+    <i class="absolute -left-12 -bottom-12 w-48 h-48 rounded-full border-[18px] border-ac/30"></i>
+    <i class="absolute -right-6 -top-6 w-24 h-24 rounded-full border-[10px] border-ac/40"></i>
+    <div class="relative grid md:grid-cols-[300px_1fr] gap-8 items-center">
+      <div class="relative mx-auto w-[250px] md:w-full">
+        <div class="aspect-[4/5] rounded-2xl overflow-hidden border border-ac/40 shadow-2xl bg-black"><img id="photo" alt="Foto Ivan" class="w-full h-full object-cover" draggable="false"></div>
+      </div>
+      <div>
+        <p class="text-xs tracking-[.3em] text-ac">ABOUT ME</p>
+        <h2 class="h2 mt-2 leading-tight" style="font-size:clamp(1.6rem,4.5vw,2.4rem)">SIAP MENGERJAKAN <span class="text-ac">PROJECT WEB &amp; DESKTOP</span> UNTUKMU</h2>
+        <p class="mt-4 text-sm leading-7 opacity-80">Halo! Saya seorang Software &amp; Web Developer yang berdedikasi mengubah ide menjadi aplikasi nyata. Berbekal pengalaman mengembangkan berbagai proyek, mulai dari sistem web berbasis Laravel, aplikasi desktop, hingga integrasi perangkat IoT, saya selalu berfokus menulis kode yang rapi, aman, dan mudah dirawat. Salah satu pencapaian terbaik saya adalah <strong>Juara 3 Kompetisi Inovasi KRENOVA</strong>.</p>
+        <div class="grid grid-cols-3 gap-3 mt-6 text-center">
+          <div class="card p-3"><b class="font-dis text-2xl text-ac">8</b><div class="text-[11px] opacity-70">Project</div></div>
+          <div class="card p-3"><b class="font-dis text-2xl text-ac">4</b><div class="text-[11px] opacity-70">Skill Utama</div></div>
+          <div class="card p-3"><b class="font-dis text-2xl text-ac">3</b><div class="text-[11px] opacity-70">KRENOVA</div></div>
+        </div>
+        <div class="flex flex-wrap gap-3 mt-6">
+          <a href="#project" class="px-6 py-2.5 rounded-full bg-ac text-sm font-semibold" style="color:rgb(var(--on))">Lihat Project</a>
+          <a href="https://wa.me/6283160989366" target="_blank" class="px-6 py-2.5 rounded-full border border-ac/60 text-sm hover:bg-ac/20">Hubungi Saya</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILL -->
+<section id="skill" class="sec">
+  <h2 class="h2">MY <span class="text-ac">SKILL</span></h2>
+  <div id="skills" class="grid md:grid-cols-2 gap-5 mt-6"></div>
+</section>
+
+<!-- PROJECT -->
+<section id="project" class="sec">
+  <div class="flex items-end justify-between gap-4 flex-wrap">
+    <div><p class="text-xs tracking-[.3em] text-ac">MY WORK</p><h2 class="h2 mt-1">RECENT <span class="text-ac">PROJECT</span></h2></div>
+    <div class="flex gap-2">
+      <button id="pp" aria-label="Sebelumnya" class="w-11 h-11 rounded-full border border-ac/50 hover:bg-ac/30">←</button>
+      <button id="pn" aria-label="Berikutnya" class="w-11 h-11 rounded-full border border-ac/50 hover:bg-ac/30">→</button>
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-2 mt-4 text-sm">
+    <button data-f="all" class="px-5 py-2 rounded-full bg-ac" style="color:rgb(var(--on))">Semua</button>
+    <button data-f="Website" class="px-5 py-2 rounded-full border border-ac/40">Website</button>
+    <button data-f="Desktop" class="px-5 py-2 rounded-full border border-ac/40">Desktop</button>
+  </div>
+  <div id="projects" class="flex gap-4 overflow-x-auto snap-x snap-mandatory mt-6 pb-3" style="scrollbar-width:none"></div>
+  <div id="dots" class="flex justify-center gap-2 mt-3"></div>
+</section>
+
+<!-- GALERI -->
+<section id="galeri" class="sec">
+  <div class="flex items-end justify-between flex-wrap gap-3">
+    <h2 class="h2">GALE<span class="text-ac">RI</span></h2>
+  </div>
+  <div id="gal" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-ac/30 pt-14 pb-28 md:pb-10" style="background:linear-gradient(180deg,transparent,rgb(0 0 0/.55))">
+  <div class="max-w-[1100px] mx-auto px-5">
+    <div class="grid grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-x-6 gap-y-10">
+      <div class="col-span-2 lg:col-span-1">
+        <a href="#home" class="inline-flex items-center gap-3">
+          <span class="grid place-items-center w-12 h-12 border-2 border-ac font-dis text-xl text-ac rotate-45"><span class="-rotate-45">IK</span></span>
+          <span class="font-dis text-2xl tracking-wider leading-none">IVAN<span class="text-ac">.</span>K</span>
+        </a>
+        <p class="text-[11px] tracking-[.25em] opacity-70 mt-4 uppercase">Ivan Kurniawan</p>
+        <p class="text-[11px] tracking-[.25em] text-ac mt-1 uppercase">Code · Design · Deploy</p>
+      </div>
+      <div><h4 class="text-[11px] tracking-[.3em] text-ac mb-4">Menu</h4><ul class="space-y-2.5 text-[13px] tracking-[.15em] uppercase"><li><a href="#home"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Home</a></li><li><a href="#about"  class="opacity-80 hover:opacity-100 hover:text-ac transition">About</a></li><li><a href="#skill"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Skill</a></li><li><a href="#project"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Project</a></li><li><a href="#galeri"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Galeri</a></li></ul></div>
+      <div><h4 class="text-[11px] tracking-[.3em] text-ac mb-4">Skill</h4><ul class="space-y-2.5 text-[13px] tracking-[.15em] uppercase"><li><a href="#skill"  class="opacity-80 hover:opacity-100 hover:text-ac transition">HTML</a></li><li><a href="#skill"  class="opacity-80 hover:opacity-100 hover:text-ac transition">CSS</a></li><li><a href="#skill"  class="opacity-80 hover:opacity-100 hover:text-ac transition">PHP</a></li><li><a href="#skill"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Laravel</a></li></ul></div>
+      <div><h4 class="text-[11px] tracking-[.3em] text-ac mb-4">Project</h4><ul class="space-y-2.5 text-[13px] tracking-[.15em] uppercase"><li><a href="#project"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Website</a></li><li><a href="#project"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Desktop App</a></li><li><a href="#project"  class="opacity-80 hover:opacity-100 hover:text-ac transition">Web Berita</a></li></ul></div>
+      <div><h4 class="text-[11px] tracking-[.3em] text-ac mb-4">Kontak</h4><ul class="space-y-2.5 text-[13px] tracking-[.15em] uppercase"><li><a href="https://wa.me/6281234567890" target="_blank" class="opacity-80 hover:opacity-100 hover:text-ac transition">WhatsApp</a></li><li><a href="https://instagram.com/username" target="_blank" class="opacity-80 hover:opacity-100 hover:text-ac transition">Instagram</a></li><li><a href="https://tiktok.com/@username" target="_blank" class="opacity-80 hover:opacity-100 hover:text-ac transition">TikTok</a></li></ul></div>
+    </div>
+    <div class="h-px bg-white/25 mt-12"></div>
+    <div class="flex flex-col items-center mt-10 gap-6">
+      <div class="flex gap-4">
+        <a href="https://wa.me/6283160989366" target="_blank" title="WhatsApp" class="w-12 h-12 rounded-full border border-white/60 grid place-items-center hover:bg-ac hover:border-ac transition" style="--h:1"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-3.7-.9-3.1-1.3-5-4.4-5.2-4.6-.1-.2-1.200-1.600-1.200-3s.7-2.100 1-2.400c.2-.3.500-.3.700-.3h.5c.2 0 .4 0 .6.500l.8 2c.1.200.1.300 0 .500l-.3.400-.4.500c-.1.200-.3.300-.1.600.2.300.8 1.300 1.700 2.100 1.200 1 2.100 1.300 2.400 1.500.3.100.5.100.600-.1l.9-1.100c.2-.2.400-.2.600-.1l1.900.9c.3.1.5.2.5.300.1.200.1.800-.1 1.500Z"/></svg></a>
+        <a href="https://www.instagram.com/iv.ntyz?stkn=bTE5czB4ajB2eGQy" target="_blank" title="Instagram" class="w-12 h-12 rounded-full border border-white/60 grid place-items-center hover:bg-ac hover:border-ac transition"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.500" cy="6.500" r="1" fill="currentColor"/></svg></a>
+        <a href="https://tiktok.com/@user0173726332" target="_blank" title="TikTok" class="w-12 h-12 rounded-full border border-white/60 grid place-items-center hover:bg-ac hover:border-ac transition"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M16.600 2h-3.200v13.200a2.800 2.800 0 1 1-2.800-2.800c.3 0 .6 0 .8.100V9.200a6 6 0 1 0 5.200 5.900V8.300a7.500 7.500 0 0 0 4.400 1.400V6.500A4.400 4.400 0 0 1 16.600 2Z"/></svg></a>
+      </div>
+      <p class="text-xs opacity-60 text-center">©2026 Ivan Kurniawan. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="lb" class="fixed inset-0 z-[60] bg-black/90 place-items-center p-4" style="display:none"></div>
+<script>
+// Foto About
+const photo=document.getElementById('photo');photo.src='image/foto.jpeg';
+
+// tema warna
+const T={red:'220 38 38',blue:'37 99 235',green:'22 163 74',mono:'245 245 245'};
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{
+  const k=b.dataset.t,s=document.documentElement.style;
+  s.setProperty('--a',T[k]);
+  s.setProperty('--on',k==='mono'?'0 0 0':'255 255 255');
+  s.setProperty('--bg',k==='mono'?'0 0 0':k==='blue'?'6 9 18':k==='green'?'6 14 9':'12 8 9');
+  document.querySelectorAll('[data-t]').forEach(x=>x.classList.remove('ring-2','ring-white'));
+  b.classList.add('ring-2','ring-white');
+});
+
+// Langit pixel mengikuti waktu lokal perangkat
+(function(){
+const canvas=document.getElementById('sky'),ctx=canvas.getContext('2d'),pixel=4;
+let width=0,height=0;
+const stars=Array.from({length:64},(_,i)=>({x:(i*37%97)/100,y:(i*23+11)%64/100,phase:i*1.7}));
+function block(x,y,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),1,1)}
+function drawSun(x,y){
+  const left=Math.round(x-8),top=Math.round(y-8);
+  for(let py=0;py<16;py++)for(let px=0;px<16;px++){
+    const dx=px-7.5,dy=py-7.5,d=dx*dx+dy*dy;
+    if(d<42)block(left+px,top+py,d>32?'#e98b2f':d>20?'#ffc247':'#ffe98a');
+  }
+  for(let i=0;i<2;i++){
+    block(left+7+i,top+i,'#ffc247');block(left+7+i,top+14+i,'#ffc247');
+    block(left+i,top+7+i,'#ffc247');block(left+14+i,top+7+i,'#ffc247');
+  }
+  [[2,2],[13,2],[2,13],[13,13]].forEach(([px,py])=>block(left+px,top+py,'#ffc247'));
+}
+function drawMoon(x,y){
+  const left=Math.round(x-8),top=Math.round(y-8);
+  for(let py=0;py<16;py++)for(let px=0;px<16;px++){
+    const dx=px-7.5,dy=py-7.5,d=dx*dx+dy*dy;
+    const cutX=px-11,cutY=py-4;
+    if(d<48&&cutX*cutX+cutY*cutY>35)block(left+px,top+py,d>34?'#aebbd0':'#edf3ff');
+  }
+}
+function drawSky(){
+  width=Math.ceil(innerWidth/pixel);height=Math.ceil(innerHeight/pixel);
+  if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height}
+  ctx.clearRect(0,0,width,height);
+  const now=new Date(),minutes=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
+  const daytime=minutes>=360&&minutes<1080;
+  let progress,darkness=0;
+  if(daytime){
+    progress=(minutes-360)/720;
+    darkness=Math.max(0,.8-Math.sin(progress*Math.PI))*.5;
+  }else{
+    progress=minutes>=1080?(minutes-1080)/720:(minutes+360)/720;
+    darkness=Math.sin(progress*Math.PI);
+  }
+  stars.forEach(star=>{
+    const shimmer=.45+.35*Math.sin(now.getTime()/4500+star.phase);
+    ctx.globalAlpha=darkness*shimmer;
+    block(star.x*width,star.y*height,'#dce9ff');
+  });
+  ctx.globalAlpha=1;
+  const x=progress*(width+24)-12;
+  const y=height*(.48-.28*Math.sin(progress*Math.PI));
+  if(daytime)drawSun(x,y);else drawMoon(x,y);
+}
+addEventListener('resize',drawSky);
+drawSky();setInterval(drawSky,30000);
+})();
+
+// 3D karakter blok (gaya Minecraft)
+(function(){
+const stage=document.getElementById('stage'),cv=document.getElementById('cv'),ctl=document.getElementById('ctl');
+const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const skins=['#f1c9a5','#e0ac7e','#b9835a','#7a4a2e'],hcs=['#1b1412','#5a3a22','#c9a24a','#d8d8d8'],tcs=['tema','#f5f5f5','#1c1c22','#2b4c7e'],bcs=['#222831','#3b5b92','#6b5a45','#e8e8e8'];
+const S={skin:0,hair:0,hc:0,top:1,tc:0,btm:0,st:0,gl:1,cap:0,hp:0};
+let R;try{R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true})}catch(e){stage.insertAdjacentHTML('beforeend','<p class="absolute inset-0 grid place-items-center text-xs opacity-70 p-6 text-center">Browser belum mendukung 3D</p>');return}
+const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(35,.76,.1,100);cam.position.set(0,2.1,9.5);cam.lookAt(0,1.8,0);
+scene.add(new THREE.AmbientLight(0xffffff,.7));
+const key=new THREE.DirectionalLight(0xffffff,.9);key.position.set(3,5,6);scene.add(key);
+const rim=new THREE.DirectionalLight(0xffffff,1.2);rim.position.set(-4,3,-4);scene.add(rim);
+const acc=()=>new THREE.Color('rgb('+getComputedStyle(document.documentElement).getPropertyValue('--a').trim().split(/\s+/).join(',')+')');
+let ch,head,ry=0,drag=0,lx=0,mx=0,my=0,t=0;
+function fit(){const w=stage.clientWidth,h=stage.clientHeight;R.setPixelRatio(S.st==2?.2:Math.min(devicePixelRatio,2));R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();cv.style.imageRendering=S.st==2?'pixelated':'auto'}
+function build(){
+  if(ch)scene.remove(ch);
+  const A=acc(),st=S.st;rim.color.set(st===3?0x4defff:A);
+  ch=new THREE.Group();head=new THREE.Group();head.position.y=2.55;
+  const M=(w,h,d,c,x,y,z,p)=>{p=p||ch;const g=new THREE.BoxGeometry(w,h,d);
+    const m=st==3?new THREE.MeshBasicMaterial({color:0x19cbed,transparent:true,opacity:.24,side:THREE.DoubleSide,depthWrite:false}):st==1?new THREE.MeshStandardMaterial({color:c,roughness:.65}):st==2?new THREE.MeshLambertMaterial({color:c}):new THREE.MeshToonMaterial({color:c});
+    const k=new THREE.Mesh(g,m);k.position.set(x,y,z);p.add(k);
+    if(st==3){const edge=new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xc7fbff,transparent:true,opacity:.95}));edge.scale.setScalar(1.025);k.add(edge)}
+    if(st==0){const o=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0x000000,side:THREE.BackSide}));o.scale.setScalar(1.08);k.add(o)}return k};
+  const sk=skins[S.skin],hl=hcs[S.hc],pc=bcs[S.btm],sc=S.tc==0?A:tcs[S.tc],c2=S.tc==0?'#f5f5f5':A;
+  const d=new THREE.Mesh(new THREE.CircleGeometry(1.7,40),new THREE.MeshBasicMaterial({color:A,transparent:true,opacity:.35}));d.rotation.x=-Math.PI/2;d.position.y=.01;ch.add(d);
+  [-1,1].forEach(i=>{M(.5,1.05,.5,pc,i*.28,.775,0);M(.55,.25,.7,A,i*.28,.125,.08);M(.4,1.15,.4,sk,i*.82,1.95,0);
+    S.top==0?M(.46,.5,.46,sc,i*.82,2.275,0):M(.46,1,.46,sc,i*.82,2.025,0)});
+  M(1.2,1.25,.65,sc,0,1.925,0);
+  if(S.top==1)M(.9,.4,.45,sc,0,2.5,-.4);
+  if(S.top==2)M(.08,1.25,.67,c2,0,1.925,0);
+  M(.95,.95,.95,sk,0,.5,0,head);M(.13,.2,.05,'#111',-.22,.58,.5,head);M(.13,.2,.05,'#111',.22,.58,.5,head);M(.28,.06,.05,'#7a3b3b',0,.3,.5,head);
+  M(1.02,.3,1.02,hl,0,.9,0,head);
+  if(S.hair<2)M(1.02,.5,.2,hl,0,.7,-.43,head);
+  if(S.hair==1)M(.5,.35,.6,hl,0,1.15,.2,head);
+  if(S.hair==2){M(1.02,1.1,.22,hl,0,.45,-.43,head);M(.12,.7,.7,hl,-.5,.7,-.1,head);M(.12,.7,.7,hl,.5,.7,-.1,head)}
+  if(S.gl){M(.3,.22,.06,'#111',-.22,.58,.52,head);M(.3,.22,.06,'#111',.22,.58,.52,head);M(.14,.05,.06,'#111',0,.62,.52,head)}
+  if(S.cap){M(1.06,.22,1.06,A,0,1,0,head);M(1,.06,.5,A,0,.92,.6,head)}
+  if(S.hp){M(.14,.5,.5,A,-.55,.5,0,head);M(.14,.5,.5,A,.55,.5,0,head);M(1.14,.1,.2,A,0,1.07,0,head)}
+  ch.add(head);scene.add(ch);fit();
+}
+const rowS=(l,k,it,sw)=>`<div class="flex items-center gap-2"><span class="w-16 shrink-0 opacity-60">${l}</span><div class="flex flex-wrap gap-1.5">`+it.map((x,i)=>sw?`<button data-k="${k}" data-v="${i}" aria-label="${l} ${i+1}" class="w-8 h-8 rounded-full border-2 ${S[k]==i?'border-white':'border-transparent'}" style="background:${x=='tema'?'rgb(var(--a))':x}"></button>`:`<button data-k="${k}" data-v="${i}" class="px-3 py-1.5 rounded-full border ${S[k]==i?'bg-ac border-ac':'border-white/25'}" style="${S[k]==i?'color:rgb(var(--on))':''}">${x}</button>`).join('')+'</div></div>';
+function ui(){ctl.innerHTML=rowS('Kulit','skin',skins,1)+rowS('Rambut','hair',['Pendek','Jambul','Gondrong'])+rowS('Warna','hc',hcs,1)+rowS('Atasan','top',['Kaos','Hoodie','Jaket'])+rowS('Warna','tc',tcs,1)+rowS('Celana','btm',bcs,1)
+ +`<div class="flex items-center gap-2"><span class="w-16 shrink-0 opacity-60">Aksesoris</span><div class="flex flex-wrap gap-1.5">`+[['Kacamata','gl'],['Topi','cap'],['Headphone','hp']].map(([n,k])=>`<button data-k="${k}" data-v="t" class="px-3 py-1.5 rounded-full border ${S[k]?'bg-ac border-ac':'border-white/25'}" style="${S[k]?'color:rgb(var(--on))':''}">${n}</button>`).join('')+'</div></div>'
+ +rowS('Style','st',['Toon','Realistis','Pixel','Hologram'])}
+ctl.onclick=e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.k;S[k]=b.dataset.v==='t'?S[k]^1:+b.dataset.v;ui();build()};
+cv.onpointerdown=e=>{drag=1;lx=e.clientX;cv.setPointerCapture(e.pointerId)};
+cv.onpointermove=e=>{if(drag){ry+=(e.clientX-lx)*.012;lx=e.clientX}};
+cv.onpointerup=cv.onpointercancel=()=>{drag=0};
+addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();mx=Math.max(-1,Math.min(1,(e.clientX-r.left-r.width/2)/(innerWidth/2)));my=Math.max(-1,Math.min(1,(e.clientY-r.top-r.height/3)/(innerHeight/2)))});
+document.querySelectorAll('[data-t]').forEach(b=>b.addEventListener('click',()=>setTimeout(build,30)));
+new ResizeObserver(fit).observe(stage);
+ui();build();
+(function loop(){t+=.02;
+  if(!drag){const n=Math.round(ry/6.2832)*6.2832;ry+=(n-ry)*.04}
+  ch.rotation.y=ry+((drag||rm)?0:Math.sin(t)*.25);ch.position.y=rm?0:Math.sin(t*2)*.04;
+  head.rotation.y+=(mx*.7-head.rotation.y)*.1;head.rotation.x+=(my*.3-head.rotation.x)*.1;
+  R.render(scene,cam);requestAnimationFrame(loop)})();
+})();
+
+// skill
+const S=[['HTML',90],['CSS',85],['PHP',80],['Laravel',75]];
+document.getElementById('skills').innerHTML=S.map(([n,v])=>`<div class="card p-5"><div class="flex justify-between mb-2"><b>${n}</b><span class="text-ac">${v}%</span></div><div class="h-2 rounded bg-white/10"><div class="h-2 rounded bg-ac" style="width:${v}%"></div></div></div>`).join('');
+
+// project
+const P=[
+  ['Sistem Absensi Karang Taruna','Website','Dashboard absensi dan pengajuan izin anggota.','image/project/absen.kr.png'],
+  ['Website SMKN 2 Karanganyar','Website','Website informasi sekolah dan berita.','image/project/artikel-sekolah.png'],
+  ['Aplikasi Bengkel Mobil','Desktop','Dashboard kasir dan pengelolaan bengkel.','image/project/bengkel-mobil-desktop.png'],
+  ['Blogger Personal','Website','Halaman profil kreator dan materi belajar.','image/project/blogger.png'],
+  ['Sistem Informasi Desa','Desktop','Dashboard layanan dan informasi desa.','image/project/desaku-desktop.png'],
+  ['Laporan Keuangan Karang Taruna','Website','Ringkasan pemasukan, pengeluaran, dan saldo kas.','image/project/keuangan-kr.png'],
+  ['Portal Berita GenZ','Website','Portal berita dengan kategori dan artikel.','image/project/portal-berita.png'],
+  ['POSBUGGER','Website','Halaman login untuk sistem kasir.','image/project/pos.png']
+];
+const pr=document.getElementById('projects'),dt=document.getElementById('dots');
+function dots(){const n=Math.max(1,Math.ceil(pr.scrollWidth/pr.clientWidth-.05)),m=pr.scrollWidth-pr.clientWidth,c=m>0?Math.round(pr.scrollLeft/m*(n-1)):0;dt.innerHTML=Array.from({length:n},(_,i)=>`<i class="h-2 rounded-full transition-all ${i==c?'w-6 bg-ac':'w-2 bg-white/30'}"></i>`).join('')}
+function rp(f){pr.innerHTML=P.filter(p=>f==='all'||p[1]===f).map(p=>`<div class="card snap-start shrink-0 w-[78%] sm:w-[46%] lg:w-[31.5%] overflow-hidden"><div class="h-40 overflow-hidden bg-black/40"><img src="${p[3]}" alt="Tampilan ${p[0]}" class="w-full h-full object-cover" loading="lazy"></div><div class="p-4 pr-16 relative"><span class="text-[10px] tracking-widest text-ac">${p[1].toUpperCase()}</span><h3 class="font-semibold mt-1">${p[0]}</h3><p class="text-xs opacity-70 mt-1">${p[2]}</p><a href="#project" aria-label="Buka ${p[0]}" class="absolute right-4 bottom-4 w-10 h-10 rounded-full bg-ac grid place-items-center" style="color:rgb(var(--on))">↗</a></div></div>`).join('');pr.scrollLeft=0;dots()}
+rp('all');pr.onscroll=dots;addEventListener('resize',dots);
+document.getElementById('pp').onclick=()=>pr.scrollBy({left:-pr.clientWidth*.8,behavior:'smooth'});
+document.getElementById('pn').onclick=()=>pr.scrollBy({left:pr.clientWidth*.8,behavior:'smooth'});
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{rp(b.dataset.f);
+  document.querySelectorAll('[data-f]').forEach(x=>{x.className='px-5 py-2 rounded-full border border-ac/40';x.style.color=''});
+  b.className='px-5 py-2 rounded-full bg-ac';b.style.color='rgb(var(--on))'});
+
+// galeri foto
+const gal=document.getElementById('gal');
+[
+  ['image/galeri/1.jpeg','Suasana belajar dan coding'],
+  ['image/galeri/2.png','Laptop dan perangkat gaming'],
+  ['image/galeri/3.png','Setup musik di laptop'],
+  ['image/galeri/4.jpeg','Pemandangan sore'],
+  ['image/galeri/5.jpeg','Bersama teman sekolah'],
+  ['image/galeri/6.jpeg','Kompetisi inovasi'],
+  ['image/galeri/7.jpeg','Penghargaan KRENOVA'],
+  ['image/galeri/8.jpeg','Mengerjakan project di laptop']
+].forEach(([src,alt])=>gal.insertAdjacentHTML('beforeend',`<div class="card aspect-square overflow-hidden"><img src="${src}" alt="${alt}" class="w-full h-full object-cover" loading="lazy"></div>`));
+const lb=document.getElementById('lb');
+gal.onclick=e=>{const c=e.target.closest('.card');if(!c)return;const im=c.querySelector('img');lb.innerHTML=im?`<img src="${im.src}" class="max-h-[85vh] max-w-full rounded-xl">`:`<div style="font-size:9rem">${c.textContent}</div>`;lb.style.display='grid'};
+lb.onclick=()=>lb.style.display='none';
+// menu aktif saat scroll
+const links=[...document.querySelectorAll('nav a')];
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+x.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id]').forEach(x=>io.observe(x));
+</script>
+</body>
+</html>
